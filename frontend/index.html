@@ -76,7 +76,18 @@
         }
 
         if (params.get("error") === "1") {
-            message.textContent = "Invalid username or password.";
+            const attempts = params.get("attempts");
+
+            message.textContent =
+                `Invalid username or password. ${attempts} attempts remaining.`;
+
+            message.classList.add("error-message");
+        }
+
+        if (params.get("locked") === "1") {
+            message.textContent =
+                "Too many failed login attempts. Please try again in 5 minutes.";
+
             message.classList.add("error-message");
         }
 

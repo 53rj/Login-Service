@@ -1,11 +1,14 @@
 <?php
+
 session_start();
-require '../backend/auth.php';
-if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: login.php');
-    exit();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.html');
+    exit;
 }
+
 $username = $_SESSION['username'] ?? '';
+
 ?>
 
 <!DOCTYPE html>
