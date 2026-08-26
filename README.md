@@ -5,6 +5,7 @@ Ein einfacher, modular aufgebauter Login-Service mit PHP und MySQL, der langfris
 ## Ziel
 
 Der Login-Service soll grundlegende Funktionen zur Benutzerverwaltung unabhängig vom eigentlichen Projekt bereitstellen.
+<img width="418" height="427" alt="grafik" src="https://github.com/user-attachments/assets/36a421d6-7a83-4c83-89b7-ee6dae3c2853" />
 
 Aktuell liegt der Fokus auf:
 
