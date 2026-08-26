@@ -5,7 +5,6 @@ Ein einfacher, modular aufgebauter Login-Service mit PHP und MySQL, der langfris
 ## Ziel
 
 Der Login-Service soll grundlegende Funktionen zur Benutzerverwaltung unabhängig vom eigentlichen Projekt bereitstellen.
-<img width="418" height="427" alt="grafik" src="https://github.com/user-attachments/assets/36a421d6-7a83-4c83-89b7-ee6dae3c2853" />
 
 Aktuell liegt der Fokus auf:
 
@@ -92,9 +91,9 @@ Für MySQL muss die PHP-Erweiterung `pdo_mysql` aktiviert sein.
 
 Der Service soll zukünftig unter anderem erweitert werden um:
 
-* [ ] Validierung von Registrierungsdaten
-* [ ] Passwort-Richtlinien
-* [ ] Passwort bestätigen bei Registrierung
+* [x] Validierung von Registrierungsdaten
+* [x] Passwort-Richtlinien
+* [x] Passwort bestätigen bei Registrierung
 * [ ] E-Mail-Adressen für Benutzer
 * [ ] Passwort vergessen / Passwort zurücksetzen
 * [ ] E-Mail-Verifizierung
@@ -133,3 +132,7 @@ Langfristig soll daraus ein kleiner wiederverwendbarer Authentication-Baustein e
 **Work in Progress**
 
 Der Service befindet sich aktuell in der Entwicklung und ist noch nicht für den produktiven Einsatz vorgesehen.
+
+Der aktuelle Stand als Diagramm:
+<img width="1536" height="1024" alt="grafik" src="https://github.com/user-attachments/assets/993be970-7294-4e65-8dd9-70553440062c" />
+
