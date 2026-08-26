@@ -8,12 +8,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
+    $passwordConfirm = $_POST['password_confirm'] ?? '';
 
-    if ($username === '' || $password === '') {
-        $error = 'Username and password are required.';
+    if ($username === '' || $password === '' || $passwordConfirm === '') {
+
+    $error = 'All fields are required.';
+
+    } elseif ($password !== $passwordConfirm) {
+
+        $error = 'The passwords do not match.';
+
+    } elseif (strlen($password) < 8) {
+
+        $error = 'The password must contain at least 8 characters.';
+
     } else {
 
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        // Registrierung erfolgt
+    }
+
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
         try {
             $stmt = $pdo->prepare("
@@ -35,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-}
 
 ?>
 
@@ -77,13 +90,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                >
+
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="password"
+                        aria-label="Passwort anzeigen"
+                    >
+                        Show
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm">Repeat Password</label>
+
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password_confirm"
+                        name="password_confirm"
+                        placeholder="Repeat Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="password_confirm"
+                        aria-label="Passwort anzeigen"
+                    >
+                        Show
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="login-button">
@@ -93,6 +141,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
     </div>
+
+    <script>
+        const passwordToggles = document.querySelectorAll(".password-toggle");
+
+        passwordToggles.forEach(toggle => {
+            toggle.addEventListener("click", () => {
+                const targetId = toggle.dataset.target;
+                const passwordInput = document.getElementById(targetId);
+
+                const isHidden = passwordInput.type === "password";
+
+                passwordInput.type = isHidden ? "text" : "password";
+
+                toggle.textContent = isHidden ? "Hide" : "Show";
+
+                toggle.setAttribute(
+                    "aria-label",
+                    isHidden ? "Passwort verbergen" : "Passwort anzeigen"
+                );
+            });
+        });
+    </script>
 
 </body>
 </html>
