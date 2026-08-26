@@ -10,14 +10,10 @@ $_SESSION['lockout_until'] ??= 0;
 
 require 'db.php';
 
-$username = $_POST['username'] ?? '';
-$password = $_POST['password'] ?? '';
-
-$stmt = $pdo->prepare("
-    SELECT id, username, password
-    FROM users
-    WHERE username = ?
-");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../frontend/index.html');
+    exit;
+}
 
 if ($_SESSION['lockout_until'] > time()) {
 
@@ -28,6 +24,29 @@ if ($_SESSION['lockout_until'] > time()) {
     );
     exit;
 }
+
+if ($_SESSION['lockout_until'] !== 0) {
+    $_SESSION['login_attempts'] = 0;
+    $_SESSION['lockout_until'] = 0;
+}
+
+$username = trim($_POST['username'] ?? '');
+$password = $_POST['password'] ?? '';
+
+if ($username === '' || $password === '') {
+
+    header(
+        'Location: ../frontend/index.html?error=1&attempts='
+        . ($maxAttempts - $_SESSION['login_attempts'])
+    );
+    exit;
+}
+
+$stmt = $pdo->prepare("
+    SELECT id, username, password
+    FROM users
+    WHERE username = ?
+");
 
 $stmt->execute([$username]);
 
